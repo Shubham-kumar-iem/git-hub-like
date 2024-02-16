@@ -3,8 +3,11 @@ import SortRepos from '../components/SortRepos'
 import ProfileInfo from '../components/ProfileInfo'
 import Repos from '../components/Repos'
 import Spinner from '../components/Spinner'
+import { useState } from 'react'
 
 const HomePage = () => {
+  const [userprofile, setuserProfile] = useState(null);
+  
   return (
     <div className='m-4'>
       <Search/>
