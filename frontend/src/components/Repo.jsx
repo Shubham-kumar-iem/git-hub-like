@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { FaCodeBranch, FaCopy, FaRegStar } from "react-icons/fa";
 import { FaCodeFork } from "react-icons/fa6";
 import { formatDate } from '../utils/functions'
@@ -5,6 +6,18 @@ import {PROGRAMMING_LANGUAGES} from '../utils/constants'
 
 const Repo = ({repo}) => {
 	const formattedDate = formatDate(repo.created_at);
+
+	const handleCloneClick = async (repo) => {
+		// console.log("handleCloneClick function is executing");
+		try {
+			await navigator.clipboard.writeText(repo.clone_url); //copy to clipboard
+			toast.success("Repo URL cloned to clipboard");
+			// console.log("URL copied to clipboard successfully");
+		} catch (error) {
+			// console.error("Error occurred while writing to clipboard:", error);
+			toast.error("Clipboard write failed. ");
+		}
+	};
 
 	return (
 		<li className='mb-10 ms-7'>
@@ -36,8 +49,9 @@ const Repo = ({repo}) => {
 					<FaCodeFork /> {repo.forks_count}
 				</span>
 				<span
+					onClick={() => handleCloneClick(repo)}
 					className='cursor-pointer bg-green-100 text-green-800 text-xs
-					font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1'
+        font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1'
 				>
 					<FaCopy /> Clone
 				</span>
